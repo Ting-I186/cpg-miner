@@ -45,15 +45,10 @@ object CpgMethodMiner {
           serializeGraph(m, subdir)
         }
       }
-      // val targetFile = new File("miner_outputs/recursive.txt")
-      // targetFile.write(cpg.method.filter(x => x.call.name.l.contains(x.name)).name.l)
-      val targetFile = config.outputDir / s"recursive.txt"
-      // (config.outputDir / s"miner_outputs/recursive.txt").createDirectories()
+      val recursiveDir = (config.outputDir / s"recursive_functions_${config.methodName}").createDirectories()
+      val targetFile = config.outputDir / s"recursive_functions_${config.methodName}/recursive.txt"
       val sb = StringBuilder(s"")
       val recursiveMethods = cpg.method.filter(x => x.call.name.l.contains(x.name)).name.l
-      // if recursiveMethods.isEmpty then 
-      //   targetFile.write(sb.toString)(File.OpenOptions.append)
-      // else 
       for method <- recursiveMethods do sb.append(" ").append(method)
       targetFile.write(sb.toString)(File.OpenOptions.append)
     }
